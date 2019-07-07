@@ -1,4 +1,4 @@
-# simulation
+# dependencies
 
 python version 3.5.2
 CUDA version 10.1
