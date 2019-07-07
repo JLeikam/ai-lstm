@@ -5,3 +5,8 @@
 - cuDNN version 10.1
 - tensorflow-gpu version 1.13.1
 - keras version 2.2.4
+
+# docs
+
+- https://docs.nvidia.com/deeplearning/sdk/cudnn-install/
+- https://keras.io/#installation
