@@ -16,7 +16,7 @@ import io
 import numpy as np
 
 FILE_NAME = "kant.txt"
-MODEL_NAME = "models/kant/v1/model.v1.06.1000.hdf5"
+MODEL_NAME = "models/kant.model.v1.06.1000.hdf5"
 # MODEL_WEIGHTS_NAME = "weights/weights.36.hdf5"
 
 # used to load a previously trained model
