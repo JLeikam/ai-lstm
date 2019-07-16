@@ -26,17 +26,17 @@ class TextGenerator:
         self.file_name = file_name
         self.model_name = model_name
 
-    def load_keras_model(self):
+    def get_keras_model(self):
         return load_model(self.model_name)
 
-    def  load_file_text(self):
+    def get_file_text(self):
         with io.open(self.file_name, mode='r', encoding='utf-8') as f:
             text = f.read().lower()
 
         return text
 
     def get_characters_from_text(self):
-        text = self.load_file_text()
+        text = self.get_file_text()
         chars = sorted(list(set(text)))
         return chars
 
@@ -59,9 +59,11 @@ class TextGenerator:
         return np.argmax(probas)
 
     def generate_text(self, length, diversity):
+        self.get_characters_from_text()
+        self.init_char_maps()
+        text = self.get_file_text()
+        model = self.get_keras_model()
         # Get random starting text
-        text = self.load_file_text()
-        model = self.load_keras_model()
         start_index = random.randint(0, len(text) - self.max_len - 1)
         print(start_index)
         generated = ''
@@ -83,7 +85,5 @@ class TextGenerator:
 
 FILE_NAME = "ebooks/kant.txt"
 MODEL_NAME = "models/kant.model.v1.06.1000.hdf5"
-gen = TextGenerator(FILE_NAME, MODEL_NAME)
-gen.get_characters_from_text()
-gen.init_char_maps()
-print(gen.generate_text(300, 0.5))
+textGenerator = TextGenerator(FILE_NAME, MODEL_NAME)
+print(textGenerator.generate_text(300, 0.5))
