@@ -5,6 +5,7 @@
 - cuDNN version 10.1
 - tensorflow-gpu version 1.13.1
 - keras version 2.2.4
+- nltk version 3.4
 
 # docs
 
