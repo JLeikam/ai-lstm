@@ -89,6 +89,6 @@ textGenerator = TextGenerator(FILE_NAME, MODEL_NAME)
 print(textGenerator.generate_text(3000, 0.5))
 
 
-f = open("text_gen_output.txt", "a", encoding="utf-8")
+f = open("text_gen_output_v2.txt", "a", encoding="utf-8")
 f.write(textGenerator.generate_text(1000, 0.5))
 f.close()

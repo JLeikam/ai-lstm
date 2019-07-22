@@ -36,10 +36,15 @@ class MarkdownGenerator:
 
 
 
-markDownGenerator = MarkdownGenerator("text_gen_output.txt", "test.md")
+markDownGenerator = MarkdownGenerator("text_gen_output_v2.txt", "test.md")
 sentences = markDownGenerator.get_sentences()
+title = markDownGenerator.get_title()
 print(sentences)
 f = open("test.md", "a", encoding="utf-8")
+f.write('---\n')
+f.write('title: ' + ' '.join(title) +'\n')
+f.write('date: ' + '2019-07-16' '\n')
+f.write('---\n')
 for sentence in sentences:
     new_sentence = sentence.capitalize().rjust(len(sentence)+1) # capitalize first letter of sentence and add space
     f.write(new_sentence)
