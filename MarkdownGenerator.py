@@ -1,8 +1,11 @@
 from nltk.tokenize import sent_tokenize, word_tokenize
 import io
+import random
+
 class MarkdownGenerator:
     text_file_name = ""
     markdown_file_name = ""
+    sentence_index = 0
 
     def __init__(self, text_file_name, markdown_file_name):
         self.text_file_name = text_file_name
@@ -24,9 +27,25 @@ class MarkdownGenerator:
         tokenized_words = word_tokenize(text)
         return tokenized_words
 
+    def get_title(self):
+        words = self.get_words()
+        title = []
+        for x in range(random.randint(3,9)):
+            title.append(words[x])
+        return title
+
+
+
 markDownGenerator = MarkdownGenerator("text_gen_output.txt", "test.md")
 sentences = markDownGenerator.get_sentences()
 print(sentences)
+f = open("test.md", "a", encoding="utf-8")
+for sentence in sentences:
+    new_sentence = sentence.capitalize().rjust(len(sentence)+1) # capitalize first letter of sentence and add space
+    f.write(new_sentence)
+f.close()
+
+
 #TODO:
 #create title
 #create timestamp/date
