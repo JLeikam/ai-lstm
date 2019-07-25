@@ -63,9 +63,7 @@ class TextGenerator:
         self.init_char_maps()
         text = self.get_file_text()
         model = self.get_keras_model()
-        # Get random starting text
         start_index = random.randint(0, len(text) - self.max_len - 1)
-        print(start_index)
         generated = ''
         sentence = text[start_index: start_index + self.max_len]
         print(sentence)
@@ -74,11 +72,9 @@ class TextGenerator:
             x_pred = np.zeros((1, self.max_len, len(self.chars)))
             for t, char in enumerate(sentence):
                 x_pred[0, t, self.char_indices[char]] = 1.
-
             preds = model.predict(x_pred, verbose=0)[0]
             next_index = self.sample(preds, diversity)
             next_char = self.indices_char[next_index]
-
             generated += next_char
             sentence = sentence[1:] + next_char
         return generated
@@ -86,9 +82,8 @@ class TextGenerator:
 FILE_NAME = "ebooks/kant.txt"
 MODEL_NAME = "models/kant.model.v1.06.1000.hdf5"
 textGenerator = TextGenerator(FILE_NAME, MODEL_NAME)
-print(textGenerator.generate_text(3000, 0.5))
 
 
-f = open("text_gen_output_v2.txt", "a", encoding="utf-8")
-f.write(textGenerator.generate_text(1000, 0.5))
+f = open("text_gen_output_v5.txt", "a", encoding="utf-8")
+f.write(textGenerator.generate_text(280, 0.3))
 f.close()

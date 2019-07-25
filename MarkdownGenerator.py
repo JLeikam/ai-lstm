@@ -1,6 +1,7 @@
 from nltk.tokenize import sent_tokenize, word_tokenize
 import io
 import random
+import datetime
 
 class MarkdownGenerator:
     text_file_name = ""
@@ -20,11 +21,27 @@ class MarkdownGenerator:
     def get_sentences(self):
         text = self.get_text()
         tokenized_sentences = sent_tokenize(text)
+        for index, sentence in enumerate(tokenized_sentences):
+            #remove first word of first sentence, or if it is not a word, delete it
+            if(index == 0):
+                if(' ' in sentence):
+                    tokenized_sentences[index] = sentence.split(' ', 1)[1]
+                else:
+                    del tokenized_sentences[index]
+                sentence = tokenized_sentences[index]
+            # remove last word of last sentence
+            if(index == len(tokenized_sentences)-1):
+               tokenized_sentences[index] = sentence.rsplit(' ', 1)[0]
+               print(tokenized_sentences[index])
+
         return tokenized_sentences
 
     def get_words(self):
         text = self.get_text()
         tokenized_words = word_tokenize(text)
+        # remove first and last 'word' because it inevitably gets cut off in text generation
+        del tokenized_words[0]
+        del tokenized_words[-1]
         return tokenized_words
 
     def get_title(self):
@@ -36,14 +53,16 @@ class MarkdownGenerator:
 
 
 
-markDownGenerator = MarkdownGenerator("text_gen_output_v2.txt", "test.md")
+markDownGenerator = MarkdownGenerator("text_gen_output_v5.txt", "test.md")
 sentences = markDownGenerator.get_sentences()
 title = markDownGenerator.get_title()
+words = markDownGenerator.get_words()
+# print(words)
 print(sentences)
-f = open("test.md", "a", encoding="utf-8")
+f = open("test2.md", "a", encoding="utf-8")
 f.write('---\n')
 f.write('title: ' + ' '.join(title) +'\n')
-f.write('date: ' + '2019-07-16' '\n')
+f.write('date: ' + str(datetime.date.today().strftime("%B %d, %Y")) + '\n')
 f.write('---\n')
 for sentence in sentences:
     new_sentence = sentence.capitalize().rjust(len(sentence)+1) # capitalize first letter of sentence and add space
