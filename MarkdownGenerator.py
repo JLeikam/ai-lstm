@@ -6,11 +6,17 @@ import datetime
 class MarkdownGenerator:
     text_file_name = ""
     markdown_file_name = ""
+    model_name = ""
+    book = ""
+    author = ""
     sentence_index = 0
 
-    def __init__(self, text_file_name, markdown_file_name):
+    def __init__(self, text_file_name, markdown_file_name, author, book, model_name):
         self.text_file_name = text_file_name
         self.markdown_file_name = markdown_file_name
+        self.author = author
+        self.book = book
+        self.model_name = model_name
 
     def get_text(self):
         with io.open(self.text_file_name, mode='r', encoding='utf-8') as f:
@@ -51,22 +57,33 @@ class MarkdownGenerator:
             title.append(words[x])
         return title
 
+    def get_author(self):
+        return self.author
 
+    def get_book(self):
+        return self.book
 
-markDownGenerator = MarkdownGenerator("text_gen_output_v5.txt", "test.md")
+    def get_model(self):
+        return self.model_name
+
+markDownGenerator = MarkdownGenerator("text_gen_output.txt", "test.md", "Kant", "A Critique of Pure Reason", "v1.06.1000.hdf5")
 sentences = markDownGenerator.get_sentences()
 title = markDownGenerator.get_title()
 words = markDownGenerator.get_words()
 # print(words)
 print(sentences)
-f = open("test2.md", "a", encoding="utf-8")
+f = open("test.md", "w+", encoding="utf-8")
 f.write('---\n')
 f.write('title: ' + ' '.join(title) +'\n')
-f.write('date: ' + str(datetime.date.today().strftime("%B %d, %Y")) + '\n')
+f.write('date: ' + str(datetime.date.today().strftime("%Y-%m-%d")) + '\n')
+f.write('author: ' + markDownGenerator.get_author() + '\n')
+f.write('book: ' + markDownGenerator.get_book() + '\n')
+f.write('model: ' + markDownGenerator.get_model() + '\n')
 f.write('---\n')
 for sentence in sentences:
     new_sentence = sentence.capitalize().rjust(len(sentence)+1) # capitalize first letter of sentence and add space
     f.write(new_sentence)
+f.write(".")
 f.close()
 
 
@@ -76,6 +93,7 @@ f.close()
 #create heading
 #create paragraph
 
+# add model metadata info
 # average words per blog post: 1142
 # average characters per word: 6
 # average words per paragraph: 150

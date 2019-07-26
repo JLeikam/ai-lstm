@@ -84,6 +84,6 @@ MODEL_NAME = "models/kant.model.v1.06.1000.hdf5"
 textGenerator = TextGenerator(FILE_NAME, MODEL_NAME)
 
 
-f = open("text_gen_output_v5.txt", "a", encoding="utf-8")
-f.write(textGenerator.generate_text(280, 0.3))
+f = open("text_gen_output.txt", "w+", encoding="utf-8")
+f.write(textGenerator.generate_text(560, 0.5))
 f.close()
